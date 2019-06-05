@@ -2,28 +2,32 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import '../index.css'
 import { connect } from 'react-redux'
+import {addUrl} from '../store/Actions/addUrl';
+import deleteUrl from '../store/Actions/deleteUrl';
 
 class LeftPane extends Component {
 
     state={
-        content:'',
-        urls:[]
+        content:''
     }
 
     handleClick = (e) => {
         // console.log('clicked')
         e.preventDefault()
         const url={}
-        url.id=Math.random()+this.state.urls.length+1
+        url.id=Math.random()+this.props.urls.length+1
         url.content=this.state.content
-        if(url.content){
-            this.setState({
-                ...this.state,
-                urls:[...this.state.urls,url],
-                content:''
-            })
-        }
-        // setTimeout(()=>console.log(this.state.urls),500)
+        // if(url.content){
+        //     this.setState({
+        //         ...this.state,
+        //         urls:[...this.state.urls,url],
+        //         content:''
+        //     })
+        // }
+        this.props.addurl(url)
+        this.setState({content:''})
+
+        // setTimeout(()=>console.log(this.props),500)
     }
 
     handleChange = (e) => {
@@ -34,18 +38,19 @@ class LeftPane extends Component {
     }
 
     deleteUrl = (id) => {
-        const newurls=this.state.urls.filter((item)=>{
+        const newurls=this.props.urls.filter((item)=>{
             return(item.id!==id)
         })
-        this.setState({
-            ...this.state,
-            urls:newurls
-        })
+        // this.setState({
+        //     ...this.state,
+        //     urls:newurls
+        // })
+        this.props.deleteurl(newurls)
     }
 
     render() {
-        console.log(this.props.url)
-        const urllist=this.state.urls.map(item=>{
+        console.log(this.props)
+        const urllist=this.props.urls.map(item=>{
             return (
                 <Link to='#' key={item.id} onClick={() => { this.props.getData(item.content) }}>
                     <div className="urls">
@@ -78,8 +83,15 @@ class LeftPane extends Component {
 
 const mapStateToProps = (state) => {
     return({
-        url:state.addrss.url
+        urls:state.addrss.urls
     })
 }
 
-export default connect(mapStateToProps)(LeftPane)
+const mapDispatchToProps = (dispatch) => {
+    return{
+        addurl: (url) => dispatch(addUrl(url)),
+        deleteurl: (newurls) => dispatch(deleteUrl(newurls)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeftPane)

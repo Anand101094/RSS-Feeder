@@ -1,7 +1,7 @@
 
 export const addUrl = (url) => {
     return{
-        type:'ADD_TODO',
-        url:url
+        type:'ADD_URL',
+        url
     }
 }
