@@ -3,7 +3,7 @@ const initstate={
 }
 
 export const AddRssReducer = (state=initstate,action) => {
-    console.log(action,state)
+    // console.log(action,state)
         switch(action.type){
             case 'DELETE_URL':
                 return {

@@ -49,7 +49,7 @@ class LeftPane extends Component {
     }
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         const urllist=this.props.urls.map(item=>{
             return (
                 <Link to='#' key={item.id} onClick={() => { this.props.getData(item.content) }}>

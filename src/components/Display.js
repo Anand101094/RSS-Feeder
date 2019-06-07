@@ -25,6 +25,8 @@ class Display extends Component {
                 feed:res.feed,
                 items:res.items
             })
+        }).catch(err=>{
+            console.log(err)
         })
     }
 
